@@ -1,0 +1,25 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool helper(TreeNode* s, TreeNode* t)
+    {
+        if(s == nullptr && t == nullptr)//都空，为真
+            return true;
+        if(s == nullptr || t == nullptr)//一个空另一个不空，为假
+            return false;
+        return s -> val == t -> val && helper(s -> left, t -> left) && helper(s -> right, t -> right); 
+    }
+    bool isSubtree(TreeNode* s, TreeNode* t) 
+    {
+        if(s == nullptr) return false;
+        return helper(s, t) || isSubtree(s -> left, t) || isSubtree(s -> right, t);
+    }
+};
