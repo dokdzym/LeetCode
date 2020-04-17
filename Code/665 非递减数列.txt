@@ -1,0 +1,35 @@
+class Solution {
+public:
+    bool isIncreasing(const vector<int>& nums)
+    {
+        size_t len = nums.size();
+        for(int i = 0; i < len - 1; ++ i)
+        {
+            if(nums[i] <= nums[i + 1])
+                ;
+            else
+                return false;
+        }
+        return true;
+    }
+    bool checkPossibility(vector<int>& nums) {
+        //遇到第一个逆序对时，必须改变其中一个数字，才可能非递减
+        size_t len = nums.size();
+        for(int i = 0; i < len - 1; ++ i)
+        {
+            if(nums[i] <= nums[i + 1])
+                ;
+            else
+            {
+                int tmp = nums[i];
+                nums[i] = nums[i + 1] - 1;
+                bool TrialOne = isIncreasing(nums);
+                nums[i] = tmp;
+                nums[i + 1] = nums[i] + 1;
+                bool TrialTwo = isIncreasing(nums);
+                return TrialOne || TrialTwo;
+            }
+        }
+        return true;
+    }
+};
