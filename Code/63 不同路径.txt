@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& o) {
+        int m = o.size();
+        if(m == 0) return 0;
+        int n = o[0].size();
+        long ** dp = new long* [m];
+        for(int i = 0; i < m; ++ i)
+            dp[i] = new long [n]{0};
+        for(size_t i = 0; i < m; ++ i)//第0列
+            if(o[i][0] == 1)
+            {
+                int index = i;
+                while(index ++ < m)
+                    dp[i][0] = 0;//阻碍
+                break;
+            }
+            else
+                dp[i][0] = 1;
+                
+        for(size_t j = 0; j < n; ++ j)//第0列
+            if(o[0][j] == 1)
+            {
+                int index = j;
+                while(index ++ < n)
+                    dp[0][j] = 0;//阻碍
+                break;
+            }
+            else
+                dp[0][j] = 1;
+        for(size_t i = 1; i < m; ++ i)
+            for(size_t j = 1; j < n; ++ j)
+            {
+                dp[i][j] = o[i][j] == 1 ? 0 : dp[i - 1][j] + dp[i][j - 1];
+            }
+        return dp[m - 1][n - 1];
+    }
+};
