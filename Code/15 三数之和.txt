@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        size_t len = nums.size();
+        if(len < 3) return res;
+        sort(nums.begin(), nums.end());
+
+        for(size_t i = 0; i < len - 2; ++ i)
+        {
+            if(i == 0 || nums[i] != nums[i - 1])//去重，只选择第一个作为i
+            {
+                int j = i + 1;
+                int k = len - 1;
+                while(j < k)
+                {
+                    int sum = nums[i] + nums[j] + nums[k];
+                    if(sum == 0)
+                    {
+                        if(j == i + 1 || nums[j - 1]!= nums[j])//去重，只选择第一个作为i
+                        {
+                            res.push_back({nums[i], nums[j], nums[k]});
+                        }
+                        ++ j;
+                        -- k;
+                    }
+                    else if(sum < 0)
+                    {
+                        ++ j;
+                    }
+                    else -- k;
+                }
+            }
+        }
+        return res;
+    }
+};

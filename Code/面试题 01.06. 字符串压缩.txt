@@ -1,0 +1,46 @@
+自写方法一： 逐个检查然后放入新串
+class Solution {
+public:
+    string compressString(string S) {
+        size_t pre_len = S.size();
+        if(pre_len <= 2) return S;
+        string res = "";//压缩后的字符串
+
+        int count = 0;
+        char cur_char;
+        char pre_char = '0';
+        for(size_t i = 0; i <= pre_len; ++ i)
+        {
+            cur_char = S[i];
+            if(i == pre_len || i > 0 && cur_char != pre_char)//将原先的字符压缩并保存(首先需要保证有前一个字符)
+            {
+                res += pre_char + to_string(count);
+                count = 1;//新字符出现
+            }
+            else
+                ++ count;
+            pre_char = cur_char;
+        }
+        size_t cur_len = res.size();
+        return cur_len < pre_len ? res : S;
+    }
+};
+
+评论区方法二：原理类似
+class Solution {
+public:
+    string compressString(string& S) {
+        string ret;
+        int cnt = 1;
+        for (int i = 0; i < S.size(); i ++) {
+            if (i != S.size() - 1 && S[i] == S[i+1]) {
+                cnt ++;
+                continue;
+            }
+            ret.push_back(S[i]);
+            ret.append(to_string(cnt));
+            cnt = 1;
+        }
+        return ret.size() >= S.size() ? S : ret;
+    }
+};

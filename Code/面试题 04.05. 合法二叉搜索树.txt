@@ -1,0 +1,16 @@
+class Solution {
+public:
+long max = LONG_MIN;
+    bool isValidBST(TreeNode* root) {
+        if(root == nullptr)
+            return true;
+        bool left_legal = isValidBST(root -> left);
+
+        if(left_legal == false || root -> val <= max)
+            return false;
+        max = root -> val;
+        
+        bool right_legal = isValidBST(root -> right);
+        return right_legal;
+    }
+};

@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> res;
+        size_t len = nums.size();
+        if(len < 4) return res;
+        sort(nums.begin(), nums.end());
+
+        for(size_t p = 0; p < len - 3; ++ p)
+            if(p == 0 || nums[p - 1] != nums[p]) //去重，只选择第一个作为p
+            {
+                for(size_t i = p + 1; i < len - 2; ++ i)
+                {
+                    if(i == p + 1 || nums[i] != nums[i - 1])//去重，只选择第一个作为i
+                    {
+                        int j = i + 1;
+                        int k = len - 1;
+                        while(j < k)
+                        {
+                            int sum = nums[p] + nums[i] + nums[j] + nums[k];
+                            if(sum == target)
+                            {
+                                if(j == i + 1 || nums[j - 1]!= nums[j])//去重，只选择最后一个作为j
+                                {
+                                    res.push_back({nums[p], nums[i], nums[j], nums[k]});
+                                }
+                                ++ j;
+                                -- k;
+                            }
+                            else if(sum < target)
+                            {
+                                ++ j;
+                            }
+                            else -- k;
+                        }
+                    }
+                }
+            }
+        return res;
+    }
+};
