@@ -1,0 +1,18 @@
+class Solution {
+public:
+int res = 0;
+    void helper(TreeNode* root, int sum)
+    {
+        if(root == nullptr) return ;
+        if(sum == root -> val) ++ res;
+        helper(root -> left, sum - root -> val);
+        helper(root -> right, sum - root -> val);
+    }
+    int pathSum(TreeNode* root, int sum) {
+        if(root == nullptr) return 0;
+        helper(root, sum);
+        pathSum(root -> left, sum);//可以从左节点开始
+        pathSum(root -> right, sum);//可以从右节点开始
+        return res;
+    }
+};

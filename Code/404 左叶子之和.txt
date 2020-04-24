@@ -1,0 +1,16 @@
+class Solution {
+public:
+int isLeftLeave = 0;
+long res = 0;
+    void helper(TreeNode* root, int flag)
+    {
+        if(root == nullptr) return;
+        if(flag && !root -> left && !root -> right) res += root -> val;
+        helper(root -> left, 1);
+        helper(root -> right, 0);
+    }
+    int sumOfLeftLeaves(TreeNode* root) {
+        helper(root, isLeftLeave);
+        return res;
+    }
+};

@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        vector<int> hash(128, -1);//记录字母和位置
+        size_t len = s.size();
+        if(len <= 1) return len;
+        int start(0), maxlen (1);//[start, i)
+        for(int i = 0; i < len; ++ i)
+        {
+            if(hash[s[i]] >= start)//重复
+            {
+                maxlen = max(maxlen, i - start);
+                start = hash[s[i]] + 1;//换开头，使得子串不重复
+            }
+            else
+                maxlen = max(maxlen, i - start + 1);
+
+            hash[s[i]] = i;//不管当前字符是否导致重复，都要记录该KV对
+        }
+        return maxlen;
+    }
+};
