@@ -1,0 +1,26 @@
+class Solution {
+public:
+vector<vector<int>> res;
+    void helper(vector<int>& nums, int i)
+    {
+        //每个位置，要么固定不动，要么与后续的位置进行一次交换
+        //逐个位置判断，判断到结尾，推入结果即可
+        if(i >= nums.size())
+        {
+            res.emplace_back(nums);
+            return ;
+        }
+        for(int j = i; j < nums.size(); ++ j)
+        {
+            swap(nums[i], nums[j]);
+            helper(nums, i + 1);
+            swap(nums[i], nums[j]);//交换完毕后换回来
+        }
+
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        size_t len = nums.size();
+        helper(nums, 0);
+        return res;
+    }
+};
