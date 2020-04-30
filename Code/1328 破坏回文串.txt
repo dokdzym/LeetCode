@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string breakPalindrome(string s) {
+        size_t len = s.size();
+        if(len == 1)
+            return "";//无法破坏回文
+        for(int i = 0; i < len; ++ i)
+        {
+            if(s[i] == 'a') ;
+            else if(len & 1 == 0 || i != len / 2)//如果长度为偶数，或者当前坐标不在中心，改变当前位置就可以破坏回文
+            {
+                s[i] = 'a';
+                return s;
+            }
+        }
+        s[len - 1] = 'b';
+        return s;
+    }
+};

@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) 
+    {
+        size_t len = nums.size();
+        int l = 0;
+        int r = nums.size() - 1;
+        while(l <= r)
+        {
+            int m = (l + r) >> 1;
+            if(nums[m] == target)
+                return m;
+            if(nums[m] >= nums[0])//当前在前半部分
+            {
+                //尽量保持在前半部分。前半部分的情况：当前值大于target且nums[0] <= target
+                if(nums[m] > target && nums[0] <= target)//target只可能在前半部分
+                    r = m - 1;
+                else
+                    l = m + 1;
+            }
+            else//当前在后半部分
+            {
+                //尽量保持在后半部分。后半部分的情况：当前值小于target且nums[len - 1] >= target
+                if(nums[m] < target && nums[len - 1] >= target)//target只可能在后半部分
+                    l = m + 1;
+                else
+                    r = m - 1;
+            }
+        }
+        return -1;
+    }
+};
