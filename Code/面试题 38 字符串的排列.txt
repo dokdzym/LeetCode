@@ -1,0 +1,29 @@
+https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/solution/c-dfs-mian-shi-ti-38-zi-fu-chuan-de-pai-lie-by-yue/
+
+class Solution {
+public:
+vector<string> res;
+    void helper(string& s, int index)
+    {
+        if(index >= s.size())
+            res.emplace_back(s);
+        for(int i = index; i < s.size(); ++ i)
+        {
+            if(judge(s, index, i)) continue;
+            swap(s[i], s[index]);
+            helper(s, index + 1);
+            swap(s[i], s[index]);
+        }
+    }
+    bool judge(string& s, int start, int end)
+    {
+        for(int i = start; i < end; ++ i)
+            if(s[i] == s[end]) return true;
+        return false;
+    }
+    vector<string> permutation(string s) {
+        helper(s, 0);
+        return res;
+    }
+};
+
