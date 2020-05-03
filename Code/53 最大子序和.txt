@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int res = nums[0];
+        int sum = nums[0];
+        for(int i = 1 ; i < nums.size(); ++ i)
+        {
+            //要么延续前面的序列，要么从当前重新开始
+            if(sum < 0)
+            {
+                res = max(res, sum);
+                sum = 0;//清零
+            }
+            sum += nums[i];
+            res = max(res, sum);
+        }
+        return res;
+    }
+};
