@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> powerfulIntegers(int x, int y, int bound) {
+        vector<int> res;
+        vector<int> hash(bound + 1, 0);//0表示没有出现过，1表示出现过
+        int x_max_trial_times = x == 1 ? 1 : INT_MAX;
+        int y_max_trial_times = y == 1 ? 1 : INT_MAX;
+        for(int i = 0; i < x_max_trial_times; ++ i)
+        {
+            long x_i = pow(x, i);
+            if(x_i > bound) break;
+            for(int j = 0; j < y_max_trial_times; ++ j)
+            {
+                long y_j = pow(y, j);
+                int sum = x_i + y_j;
+                if(sum > bound) break;
+                if(hash[sum] == 0)
+                    res.emplace_back(sum);
+                hash[sum] = 1;
+            }
+        }
+        return res;            
+    }
+};
