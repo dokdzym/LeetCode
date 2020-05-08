@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        size_t len = nums.size();
+        if(len == 1) return 0;
+        
+        int maxpos = 0;//最远的位置
+        int res = 0;
+        int end = 0;
+        for(int i = 0; i < len - 1; ++ i)
+        {
+            maxpos = max(nums[i] + i, maxpos);
+            if(i == end)
+            {
+                end = maxpos;
+                ++ res;
+            }    
+        }
+        return res;
+    }
+};

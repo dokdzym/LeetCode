@@ -1,0 +1,71 @@
+//1暴力法 2动态规划
+class Solution {
+public:
+    int helper(vector<vector<char>>& matrix, int posi, int posj)
+    {
+        size_t rows = matrix.size();
+        size_t cols = matrix[0].size();
+        //i,j是该正方形的左上角的1的行列数（从0开始）
+        //返回该正方形的面积
+        int res = 1;//面积至少为1
+        int r = 1;//正方形边长至少为1
+        while(posi + r - 1 < rows && posj + r - 1 < cols)//没有超界
+        {
+        for(int i = posi; i < posi + r && i < rows; ++ i)
+            for(int j = posj; j < posj + r && j < cols; ++ j)
+            {
+                if(matrix[i][j] == '0')//遇到了0
+                {
+                    return res;//返回面积
+                }
+            }
+            res = pow(r, 2);//更新面积
+            ++ r;//扩大尝试范围
+        }
+        return res;
+    }
+    int maximalSquare(vector<vector<char>>& matrix) {
+        size_t rows = matrix.size();
+        if(rows == 0) return 0;
+        size_t cols = matrix[0].size();
+        int res = 0;
+        for(int i = 0; i < rows; ++ i)
+            for(int j = 0; j < cols; ++ j)
+            {
+                if(matrix[i][j] == '0')
+                    continue;
+                res = max(helper(matrix, i, j), res);
+            }
+        return res;
+    }
+};
+
+动态规划：
+dp[i][j]代表（i，j）为右下角的全1正方形的边长
+
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& matrix) {
+        size_t rows = matrix.size();
+        if(rows == 0) return 0;
+        size_t cols = matrix[0].size();
+        int res = 0;
+        vector<vector<int>> dp(rows, vector<int>(cols, 0));
+         
+        for(int i = 0; i < rows; ++ i)
+            for(int j = 0; j < cols; ++ j)
+                if(matrix[i][j] == '1')
+                {
+                    if(i == 0 || j == 0)
+                    {
+                        dp[i][j] = 1;
+                    }
+                    else
+                    {
+                        dp[i][j] = min(min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                    }
+                    res = max(res, dp[i][j]);
+                }
+        return pow(res, 2);
+    }
+};
