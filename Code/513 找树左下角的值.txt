@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+        
+        TreeNode* res = root;//当前行的最左节点
+        int num_of_next_level = 0;//下一层节点数
+        int num_of_this_level = 1;//当前层节点数
+        int flag = 1;//记录是否已经取得当前层的最左节点
+
+        while(!q.empty())
+        {
+            if(num_of_this_level == 0)//跳到下一层
+            {
+                num_of_this_level = num_of_next_level;
+                num_of_next_level = 0;
+                flag = 0;
+            }
+            TreeNode* tmp = q.front();//取头节点
+            q.pop();
+            if(!flag && num_of_next_level == 0) //下一层没有节点，并且还没有取res，这时可以取了
+            {
+                flag = 1; //已经得到了当前的最左节点
+                res = tmp;
+            } 
+            TreeNode* l = tmp -> left;
+            TreeNode* r = tmp -> right;
+            if(l)
+            {
+                q.push(l);
+                num_of_next_level ++;
+            }
+            if(r)
+            {
+                q.push(r);
+                num_of_next_level ++;
+            }
+            -- num_of_this_level;//当前层节点数减少1
+        }
+        return res -> val;
+    }
+};
