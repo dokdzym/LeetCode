@@ -1,0 +1,17 @@
+class Solution {
+public: 
+    TreeNode* res;
+    bool dfs(TreeNode* root, TreeNode* p, TreeNode* q)//表示当前节点的子树是否包含p或者q
+    {
+        if(root == nullptr) return false;
+        bool l = dfs(root -> left, p, q);
+        bool r = dfs(root -> right, p, q);
+        bool ans = (l && r) || ((root == p || root == q) && (l || r));
+        if(ans) res = root;//当前节点是公共祖先
+        return l || r || root == p || root == q;
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        dfs(root, p, q);
+        return res;
+    }
+};
