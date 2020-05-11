@@ -20,3 +20,57 @@ public:
     }
 };
 
+//版本2 https://leetcode-cn.com/problems/ones-and-zeroes/solution/01bei-bao-zhi-duo-he-zheng-hao-you-qu-bie-by-sonp/
+class Solution {
+public:
+    int count(const string& str, char target)
+    {
+        int res = 0;
+        for(auto s : str)
+            if(s == target)
+                ++ res;
+        return res;
+    }
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int zeros;
+        int ones;
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        for(auto str : strs)
+        {
+            zeros = count(str, '0');
+            ones = count(str, '1');
+            for(int i = m; i >= zeros; -- i)
+                for(int j = n; j >= ones; -- j)
+                    dp[i][j] = max(dp[i][j], dp[i - zeros][j - ones] + 1);
+        }
+        return dp[m][n];
+    }
+};
+
+//版本3 https://leetcode-cn.com/problems/ones-and-zeroes/solution/duo-wei-bei-bao-wen-ti-wei-jian-hua-ban-ben-by-roc/
+
+ int findMaxForm(vector<string>& strs, int m, int n ) {
+        vector<vector<int>> nums (strs.size() , vector<int>(2 , 0));
+        for(int i = 0 ; i < strs.size() ; i++)
+        {
+            for(auto ch : strs[i])
+            {
+                if(ch == '0') (nums[i][0])++;
+                else (nums[i][1])++;
+            }
+
+        }
+        vector<vector<vector<int>>> dp(strs.size() + 1, vector<vector<int>>
+                                      (m + 1 , vector<int>(n + 1 , 0)));
+
+        for(int i = 1 ;  i < strs.size() + 1; i ++ )
+          for(int cap_0 = 0 ; cap_0 < m + 1 ; cap_0++ )
+            for(int cap_1 = 0 ; cap_1 < n + 1 ; cap_1++)
+            {
+                if(cap_0 - nums[i - 1][0] >= 0 && cap_1 - nums[i - 1][1] >= 0)
+                    dp[i][cap_0][cap_1] =
+                            max(dp[i - 1][cap_0][cap_1] ,  dp[i - 1][cap_0 - nums[i -1][0]][cap_1                             - nums[i - 1][1]] + 1 );
+                    else dp[i][cap_0][cap_1] = dp[i - 1][cap_0][cap_1];
+            }
+        return dp[strs.size()][m][n];
+    }
