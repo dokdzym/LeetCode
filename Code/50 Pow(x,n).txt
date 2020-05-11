@@ -1,0 +1,19 @@
+class Solution {
+public:
+    double helper(double x, long n)
+    {
+        if(n == 1) return x;
+        double half = myPow(x, n/2);
+        if(n & 1 == 1)//奇数
+            return half * half * x;
+        //偶数
+        return half * half;
+    }
+    double myPow(double x, int n) {
+        if(n == 0 || x== 1) return 1;
+        if(x == 0)  return 0;
+        long _n = n;
+        double res_abs = helper(x, abs(_n));//如果这里用int存abs(n) ，可能溢出
+        return n > 0 ? res_abs : 1/res_abs ;
+    }
+};
