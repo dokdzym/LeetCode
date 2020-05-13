@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(root == nullptr) return res;
+        queue<TreeNode *> q;
+        q.push(root);
+        int count = 1;//该层的个数
+        int next_count = 0;//下层个数
+        int level = 0;//当前层
+        res.push_back(vector<int>());
+        while(!q.empty())
+        {
+            TreeNode* tmp = q.front();
+            q.pop();
+            res[level].emplace_back(tmp -> val);//存值
+            -- count;
+            if(tmp -> left)
+            {
+                q.push(tmp -> left);
+                ++ next_count;
+            }
+            if(tmp -> right)
+            {
+                q.push(tmp -> right);
+                ++ next_count;
+            }
+            if(count == 0 && next_count != 0)//本层结束且下层有元素
+            {
+                ++ level;//则层数加1
+                res.push_back(vector<int>());//多存一层
+                count = next_count;
+                next_count = 0;
+            }
+        }
+        return res;
+    }
+};
