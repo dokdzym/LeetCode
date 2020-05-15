@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map <int, int> hash;//前缀和-有几个这样的前缀和
+        hash[0] = 1;
+        int pre(0), count(0);
+        for(auto i : nums)
+        {
+            pre += i;
+            if(hash.find(pre - k) != hash.end()) count += hash[pre - k];
+            ++ hash[pre];
+        }
+        return count;
+    }
+};
