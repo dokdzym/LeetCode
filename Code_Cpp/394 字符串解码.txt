@@ -1,0 +1,31 @@
+class Solution {
+public:
+    string dfs(string &s, int &i){
+        string res = "";
+        size_t len = s.size();
+        int times = 0;
+        for(; i < len; ++ i){
+            if(s[i] <= '9' && s[i] >= '0'){
+                times = times * 10 + (s[i] - '0');
+            }else if(s[i] == '['){
+                string tmp = dfs(s, ++ i);
+                while(times > 0)
+                {
+                    res += tmp;
+                    -- times;
+                }
+            }
+            else if(s[i] == ']'){
+                return res;
+            }
+            else
+                res += s[i];
+        }
+        return res;
+    }
+    string decodeString(string s) {
+        if(s.empty()) return "";
+        int index = 0;
+        return dfs(s, index);
+    }
+};

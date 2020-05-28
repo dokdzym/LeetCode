@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string dfs(string& s, int& i){
+        size_t len = s.size();
+        string res = "";
+        for(; i < len; ++ i){
+            if(s[i] == '('){ 
+                string tmp = dfs(s, ++ i);
+                reverse(tmp.begin(), tmp.end());
+                res += tmp;
+            }else if(s[i] == ')'){
+                return res;
+            }else{
+                res += s[i];
+            }
+        }
+        return res;
+    }
+    string reverseParentheses(string s) {
+        size_t len = s.size();
+        if(len == 0){
+            return "";
+        }
+        int index = 0;
+        return dfs(s, index);
+    }
+};
