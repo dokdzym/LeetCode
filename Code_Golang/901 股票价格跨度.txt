@@ -1,0 +1,37 @@
+type Price struct {
+	price int
+	date  int
+}
+type StockSpanner struct {
+	date  int
+	stack []Price
+}
+
+func Constructor() StockSpanner {
+	return StockSpanner{
+		date:  0,
+		stack: make([]Price, 0),
+	}
+}
+
+func (ss *StockSpanner) Next(price int) int {
+	for len(ss.stack) > 0 && ss.stack[len(ss.stack)-1].price <= price {
+		ss.stack = ss.stack[:len(ss.stack)-1]
+	}
+	ss.date++
+	var res = ss.date
+	if len(ss.stack) > 0 {
+		res = ss.date - ss.stack[len(ss.stack)-1].date
+	}
+	ss.stack = append(ss.stack, Price{
+		price: price,
+		date:  ss.date,
+	})
+	return res
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * obj := Constructor();
+ * param_1 := obj.Next(price);
+ */

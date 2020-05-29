@@ -1,0 +1,22 @@
+struct Node{
+    int key_; // 值是多少
+    int num_; // 前面有多少个小于他的
+};
+
+class StockSpanner {
+public:
+    StockSpanner() {
+
+    }
+    int next(int price) {
+        int sum = 0; // 前面比要插入元素小的数目，累加
+        while(!stack_.empty() && stack_.top().key_ <= price){
+            sum += stack_.top().num_;
+            stack_.pop();
+        }
+        Node node = {price,sum+1};
+        stack_.emplace(node);
+        return stack_.top().num_;
+    }
+    stack<Node> stack_;
+};
