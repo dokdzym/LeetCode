@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        stack<int> s;//用来保存位置
+        int res = 0;
+        int base = 0;
+        for(int i = 0; i < height.size(); ++ i){
+            while(!s.empty() && height[i] >= height[s.top()]){//保持一个单调小的栈
+                base = s.top();//木桶底部
+                s.pop();
+                if(s.empty())
+                    break;
+                int l = s.top();//木桶左侧
+                int distance = min(height[l], height[i]) - height[base];//木桶高度落差
+                res += distance * (i - l - 1);
+            }
+            s.push(i);
+        }
+        return res;
+    }
+};

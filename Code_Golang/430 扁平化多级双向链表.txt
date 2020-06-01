@@ -1,0 +1,35 @@
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Prev *Node
+ *     Next *Node
+ *     Child *Node
+ * }
+ */
+
+func flatten(head *Node) *Node {
+    if head == nil{
+        return nil
+    } 
+    res := head
+    for nil != head{
+        nxt := head.Next
+        if head.Child != nil{//有child
+            head.Child.Prev = head
+            head.Next = flatten(head.Child)
+            head.Child = nil //扁平化
+
+            tail := head
+            for nil != tail && nil != tail.Next{
+                tail = tail.Next
+            }//移动到尾节点
+            tail.Next = nxt
+            if nil != nxt{
+                nxt.Prev = tail
+            }
+        }
+        head = head.Next
+    }
+    return res
+}

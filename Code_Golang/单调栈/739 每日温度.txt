@@ -1,0 +1,20 @@
+func dailyTemperatures(T []int) []int {
+    leng := len(T)
+    res := make([]int, leng)
+    for i := 0; i < leng; i ++{
+        res[i] = 0
+    }
+    if 0 == leng{
+        return res
+    }
+    var stack []int
+    for i := 0; i < leng; i ++{
+        for len(stack) > 0 && T[i] > T[stack[len(stack) - 1]]{
+            tmp := stack[len(stack) - 1]
+            stack = stack[0:len(stack) - 1]
+            res[tmp] = i - tmp
+        }
+        stack = append(stack, i)
+    }
+    return res
+}

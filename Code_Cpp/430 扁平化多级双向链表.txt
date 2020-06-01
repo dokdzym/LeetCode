@@ -1,0 +1,37 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* prev;
+    Node* next;
+    Node* child;
+};
+*/
+
+class Solution {
+public:
+    Node* flatten(Node* head) {
+        if(head == nullptr)
+            return nullptr;
+        Node* nxt = nullptr;
+        Node* res = head;
+        while(head){
+            nxt = head -> next; //记录下个节点，后续要和child层的尾节点连接
+            if(head -> child){
+                head -> child -> prev = head; //child节点的prev节点应该是head
+                head -> next = flatten(head -> child);//递归，连接到child层的头节点
+                head -> child = nullptr;//扁平化，消除child节点
+                Node* tail = head;
+                while(tail && tail -> next){
+                    tail = tail -> next;
+                }//移动到child层的尾指针
+                tail -> next = nxt;
+                if(nxt)
+                    nxt -> prev = tail;
+            }
+            head = nxt;
+        }
+        return res;
+    }
+};

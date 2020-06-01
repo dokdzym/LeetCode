@@ -1,0 +1,27 @@
+func trap(height []int) int {
+    res := 0
+    stack := []int{}
+    leng := len(height)
+
+    for i := 0; i < leng; i ++{
+        for len(stack) > 0 && height[i] >= height[stack[len(stack) - 1]]{
+            base := height[stack[len(stack) - 1]] //栈顶的height，即桶的底部height
+            stack = stack[:len(stack) - 1]
+            if len(stack) == 0{
+                break
+            }
+            l := stack[len(stack) - 1]
+            distance := min(height[l], height[i]) - base
+            res += distance * (i - l - 1)
+        }
+        stack = append(stack, i)
+    }
+    return res
+}
+func min(a, b int)int{
+    if a > b{
+        return b
+    }else{
+        return a
+    }
+}
