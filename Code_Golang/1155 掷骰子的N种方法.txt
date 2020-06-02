@@ -1,0 +1,21 @@
+func numRollsToTarget(d int, f int, target int) int {
+    leng := 1000000007
+    dp := make([][]int, d + 1)  //i表示骰子个数
+    for i := range dp{
+        dp[i] = make([]int, target + 1) //j表示当前点数
+    }
+    
+    dp[0][0] = 1
+
+    for i := 1; i <= target; i ++{
+        for j := 1; j <= d; j ++{
+            for k := 1; k <= f; k ++{
+                if i >= k{
+                    dp[j][i] += dp[j - 1][i - k]
+                    dp[j][i] %= leng
+                }
+            }
+        }
+    }
+    return dp[d][target]
+}

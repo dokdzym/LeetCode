@@ -1,0 +1,22 @@
+func twoSum(nums []int, target int) []int {
+    l := 0
+    r := len(nums) - 1
+    if r <= 0{
+        return []int{}
+    }
+    res := []int{}
+
+    for l < r{
+        tmp := nums[l] + nums[r]
+        if tmp == target{
+            res = append(res, nums[l])
+            res = append(res, nums[r])
+            return res
+        }else if tmp < target{
+            l ++
+        }else {
+            r --
+        }
+    }
+    return res
+}
