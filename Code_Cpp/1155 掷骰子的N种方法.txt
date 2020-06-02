@@ -1,0 +1,21 @@
+class Solution {
+public:
+    const long long length = 1000000007;
+    int numRollsToTarget(int d, int f, int target) {
+        vector<vector<int>> dp(d + 1, vector<int>(target + 1, 0));
+        //i表示计算遍历第i个骰子后，j表示总点数，值dp[i][j]是方案数
+        dp[0][0] = 1; //初始
+        
+        for (int i = 1; i <= target;i++){
+            for (int k = 1; k <= d;k++){
+                for (int j = 1; j <= f;j++){
+                    if(i>=j){
+                        dp[k][i] += dp[k - 1][i - j];
+                        dp[k][i] %= length;
+                    }
+                }
+            }
+        }
+        return dp[d][target];
+    }
+};
