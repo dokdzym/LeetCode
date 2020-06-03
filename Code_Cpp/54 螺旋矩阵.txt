@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> res;
+        int rows = matrix.size();
+        if(rows == 0){
+            return res;
+        }
+        int cols = matrix[0].size();
+        int top = 0;
+        int left = 0;
+        int right = cols - 1;
+        int down = rows - 1;
+        
+        int i,j;
+        while(true){
+            for(int j = left; j <= right; ++ j)
+                res.push_back(matrix[top][j]);
+            if(++top > down) break;
+
+            for(int i = top; i <= down; ++ i)
+                res.push_back(matrix[i][right]);
+            if(left > --right) break;
+
+            for(int j = right; j >= left; -- j)
+                res.push_back(matrix[down][j]);
+            if(top > --down) break;
+
+            for(int i = down; i >= top; -- i)
+                res.push_back(matrix[i][left]);
+            if(++left > right) break;
+        }
+        return res;
+    }
+};
