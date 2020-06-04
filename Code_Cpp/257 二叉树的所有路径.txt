@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<string> res;
+    vector<string> binaryTreePaths(TreeNode* root) {
+        if(root == nullptr){
+            return res;
+        }
+        string path = "";
+        dfs(root, path);
+        return res;
+    };
+    void dfs(TreeNode* root, string path){
+        if(root == nullptr){
+            return ;
+        }
+        // 如果是叶子节点，则加上val对应的字符串，返回。
+        // 否则，多加 ->
+        if(root -> left || root -> right){//这条路径还没有结束
+            path += to_string(root -> val) + "->";
+        }else{//叶子节点，路径结束
+            path += to_string(root -> val);
+            res.emplace_back(path);
+            return ;
+        }
+        dfs(root -> left, path);
+        dfs(root -> right, path);
+    }
+}; 

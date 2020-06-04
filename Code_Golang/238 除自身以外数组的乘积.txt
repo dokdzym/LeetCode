@@ -1,0 +1,18 @@
+func productExceptSelf(nums []int) []int {
+    leng := len(nums)
+    res := make([]int, leng)
+    if leng == 0{
+        return res
+    }
+    res[0] = 1
+    for i := 1; i < leng; i ++{
+        res[i] = res[i - 1] * nums[i - 1]
+    }
+    
+    R := 1
+    for i := leng - 1; i >= 0; i --{
+        res[i] *= R
+        R *= nums[i]
+    }
+    return res
+}

@@ -1,0 +1,25 @@
+func nextGreatestLetter(letters []byte, target byte) byte {
+    leng := len(letters)
+    if letters[leng - 1] <= target{
+        return letters[0]
+    }
+
+    l, r := 0, leng - 1
+    hash := make(map[int]int)
+    for l <= r{
+        m := (l + r) >> 1
+        if hash[m] == 1 || letters[m] == target{
+            index := m
+            for index <= leng - 1 && letters[index] <= target{
+                index ++
+            }
+            return letters[index]
+        }else if letters[m] < target{
+            l = m
+        }else{
+            r = m
+        }
+        hash[m] = 1
+    }
+    return '1'
+}
