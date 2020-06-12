@@ -1,0 +1,35 @@
+class Solution {
+private:
+    vector<char> d; 
+public:
+    void init(){
+        d.resize(26);
+        for(int i = 0; i < 26; ++ i){
+            d[i] = 'a' + i;
+        }
+    }
+    void merge(char i, char j){
+        d[find(i) - 'a'] = find(j);
+    }
+    char find(char i){ //找到根节点，char类型
+        if(d[i - 'a'] == i)
+            return i;
+        d[i - 'a'] = find(d[i - 'a']); //路径压缩，压缩到root
+        return d[i - 'a'];
+    }
+
+    bool equationsPossible(vector<string>& equations) {
+        init();
+        for(auto & s : equations){
+            if(s[1] == '='){
+                merge(s[0], s[3]);
+            }
+        }
+        for(auto & s : equations){
+            if(s[1] == '!' && find(s[0]) == find(s[3])){
+                return false;
+            }
+        }
+        return true;
+    }
+};

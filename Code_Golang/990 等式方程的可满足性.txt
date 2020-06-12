@@ -1,0 +1,32 @@
+func find(i int, d []int) int{
+    if i < 0 || i >= 26{
+        fmt.Println("out!!!")
+    }
+    if d[i] == i{
+        return i
+    }
+    d[i] = find(d[i], d) //压缩到root
+    return d[i] 
+}
+func merge(i, j int, d []int){
+    d[find(i, d)] = find(j, d);
+}
+func equationsPossible(equations []string) bool {
+    d := make([]int, 26)
+    for i := 0; i < 26; i++ {
+        d[i] = i
+    }
+    for _, i := range equations{
+        if i[1] == '='{
+            merge(int(i[0] - 'a'), int(i[3] - 'a'), d)
+        }
+    }
+    for _, i := range equations{
+        if i[1] == '!'{
+            if(find(int(i[0] - 'a'), d) == find(int(i[3] - 'a'), d)){
+                return false;
+            }
+        }
+    }
+    return true;
+}
