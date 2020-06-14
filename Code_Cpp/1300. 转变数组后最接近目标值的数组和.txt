@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int findBestValue(vector<int>& arr, int target) {
+        int size=arr.size();
+        //输入异常情况
+        if(size==0)
+            return 0;
+        //排序
+        sort(arr.begin(),arr.end());
+        for(int i=0;i<size;++i)
+        {
+            //对当前目标数target求size-i个元素的最接近平均整数
+            double t=(double)target/(size-i);
+            int m=t;
+            //四舍五入
+            if(t-m-0.5>0)
+                ++m;
+            //如果最小值大于当前平均值
+            if(arr[i]>=m)
+                return m;
+            else
+                //更新数据
+                target-=arr[i];
+        }
+        return arr[size-1];
+    }
+};
