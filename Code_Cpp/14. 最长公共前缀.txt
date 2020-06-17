@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        //获取公共前缀的最大长度
+        int maxlen = INT_MAX;
+        for(auto& str : strs){
+            maxlen = maxlen > str.size() ? str.size() : maxlen;
+        }
+        int len = strs.size();
+        if(len == 0){
+            return "";
+        }
+        string res = strs[0].substr(0, maxlen);//初始化
+        for(auto& str : strs){
+            string front = str.substr(0, maxlen);
+            for(int i = 0; i < maxlen; ++ i){
+                if(front[i] != res[i])
+                    maxlen = i;
+            }
+        }
+        return strs[0].substr(0, maxlen);
+    }
+};
