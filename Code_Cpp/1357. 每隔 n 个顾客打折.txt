@@ -1,0 +1,33 @@
+class Cashier {
+private:
+    int customer_index = 0;
+    int _n;
+    int _discount;
+    unordered_map<int, int> price;
+public:
+    Cashier(int n, int discount, vector<int>& products, vector<int>& prices) {
+        for(int i = 0; i < products.size(); ++ i){
+            price[products[i]] = prices[i]; 
+        }
+        _discount = discount;
+        _n = n;
+    }
+    
+    double getBill(vector<int> product, vector<int> amount) {
+        ++ customer_index;
+        double curPrice = 0;
+        for(int i = 0; i < product.size(); ++ i){
+            curPrice += price[product[i]] * amount[i];
+        }
+        if(customer_index % (_n) == 0){//遇到打折
+            curPrice = curPrice - _discount * curPrice / 100;
+        }
+        return curPrice;
+    }
+};
+
+/**
+ * Your Cashier object will be instantiated and called as such:
+ * Cashier* obj = new Cashier(n, discount, products, prices);
+ * double param_1 = obj->getBill(product,amount);
+ */

@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int> replaceElements(vector<int>& arr) {
+        int len = arr.size();
+        if(len == 0)
+            return vector<int>{};
+        vector<int> helper(len, -1);
+        int rightBiggestValue = arr[len - 1];
+        for(int i = len - 2; i >= 0; -- i){
+            rightBiggestValue = max(rightBiggestValue, arr[i + 1]);
+            helper[i] = rightBiggestValue;
+        }
+        return helper;
+    }
+};
