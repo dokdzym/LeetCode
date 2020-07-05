@@ -1,0 +1,48 @@
+//有非递归方法和迭代方法
+//非递归
+class Solution {
+public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        stack<TreeNode*> stk;
+        if(root != nullptr) stk.push(root);
+        TreeNode* res = nullptr;
+        bool flag = false;
+        while(!stk.empty()){
+            TreeNode* tmp = stk.top();
+            stk.pop();
+            if(tmp != nullptr){
+                if(tmp -> right) stk.push(tmp -> right);
+                stk.push(tmp);
+                stk.push(nullptr);
+                if(tmp -> left) stk.push(tmp -> left);
+            }else{
+                if(flag) return stk.top();
+                if(p == stk.top()) flag = true;
+                stk.pop();
+            }
+        }
+        return res;
+    }
+};
+//中序遍历，保存后再次遍历
+class Solution {
+private:
+    vector<TreeNode*> data;
+public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        inorderSave(root);
+        bool flag = false;
+        for(auto& i : data){
+            if(flag) return i;
+            if(i == p) flag = true;
+        }
+        return nullptr;
+    }
+    void inorderSave(TreeNode* root){
+        if(root){
+            inorderSave(root -> left);
+            data.emplace_back(root);
+            inorderSave(root -> right);
+        }
+    }
+};

@@ -1,0 +1,16 @@
+class Solution {
+public:
+    string replaceSpace(string s) {
+        int i = 0;
+        string res;
+        for(auto& ch : s){
+            if(ch == ' '){
+                res += "%20";
+                continue;
+            }else{
+                res += ch;
+            }
+        }
+        return res;
+    }
+};

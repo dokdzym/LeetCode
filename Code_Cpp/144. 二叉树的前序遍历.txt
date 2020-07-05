@@ -1,0 +1,40 @@
+//递归
+class Solution {
+private:
+    vector<int> tree;
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        if(root){
+            tree.emplace_back(root -> val);
+            preorderTraversal(root -> left);
+            preorderTraversal(root -> right);
+        }
+        return tree;
+    }
+};
+
+
+//迭代
+class Solution {
+private:
+    vector<int> tree;
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        stack<TreeNode*> stk;
+        if(root != nullptr) stk.push(root);
+        while(!stk.empty()){
+            TreeNode* tmp = stk.top();
+            stk.pop();
+            if(tmp != nullptr){
+                if(tmp -> right) stk.push(tmp -> right);
+                if(tmp -> left) stk.push(tmp -> left);
+                stk.push(tmp);
+                stk.push(nullptr);
+            }else{
+                tree.emplace_back(stk.top() -> val);
+                stk.pop();
+            }
+        }
+        return tree;
+    }
+};
