@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int row = obstacleGrid.size();
+        if(row == 0) return 0;
+        int col = obstacleGrid[0].size();
+        vector<vector<int>> dp(row, vector<int>(col, 0));
+        //初始化两条边
+        //0~col - 1,遇到1则后续的所有都跳过
+        //0~row - 1,遇到1则后续的所有都跳过
+        for(int c = 0; c < col; ++ c){
+            if(obstacleGrid[0][c] == 1){//障碍物
+                while(c < col){
+                    dp[0][c] = 0;
+                    ++ c;
+                }
+                break;
+            }
+            dp[0][c] = 1;
+        }
+        for(int r = 0; r < row; ++ r){
+            if(obstacleGrid[r][0] == 1){//障碍物
+                while(r < row){
+                    dp[r][0] = 0;
+                    ++ r;
+                }
+                break;
+            }
+            dp[r][0] = 1;
+        }
+
+        for(int i = 1; i < row; ++ i)
+            for(int j = 1; j < col; ++ j){
+                int fromLeft = dp[i][j - 1] == 0 ? 0 : dp[i][j - 1];
+                int fromUp = dp[i - 1][j] == 0 ? 0 : dp[i - 1][j];
+                dp[i][j] = obstacleGrid[i][j] ? 0 : (fromLeft + fromUp);
+            }
+        return dp[row - 1][col - 1];
+    }
+};
