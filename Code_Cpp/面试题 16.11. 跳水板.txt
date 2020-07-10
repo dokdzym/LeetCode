@@ -1,0 +1,11 @@
+class Solution {
+public:
+    vector<int> divingBoard(int shorter, int longer, int k) {
+        vector<int> res;
+        if(k == 0) return res;
+        if(shorter == longer) return vector<int>(1, shorter * k);
+        for(int i = k; i >= 0; -- i)
+            res.emplace_back(i * shorter + (k - i) * longer);
+        return res;
+    }
+};
