@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> track;
+        backtrack(1, track, k, n);
+        return res;
+    }
+    void backtrack(int start, vector<int>& track, const int& k, const int& n){
+        if(k == track.size())
+        {
+            res.push_back(track);
+            return;
+        }
+        for(int i = start; i <= n; ++ i){
+            track.push_back(i);
+            backtrack(i + 1, track, k, n);
+            track.pop_back();
+        }
+    }
+};
+
+
+//剪枝优化
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> track;
+        backtrack(1, track, k, n);
+        return res;
+    }
+    void backtrack(int start, vector<int>& track, const int& k, const int& n){
+        if(k == track.size())
+        {
+            res.push_back(track);
+            return;
+        }
+        for(int i = start; i <= n + track.size() + 1 - k; ++ i){//剪枝
+            track.push_back(i);
+            backtrack(i + 1, track, k, n);
+            track.pop_back();
+        }
+    }
+};

@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<string> res;
+    vector<string> letterCasePermutation(string S) {
+        dfs(S, 0);
+        return res;
+    }
+    void dfs(string S, int idx){
+        if(S.size() == idx){
+            res.push_back(S);
+            return;
+        }
+        dfs(S, idx + 1);
+        if(isalpha(S[idx])){
+            S[idx] ^= 32; //进行大小写转换
+            dfs(S, idx + 1);
+        }
+    }
+};

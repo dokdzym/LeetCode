@@ -1,0 +1,79 @@
+//有两种方法
+//回溯法和交换法
+
+class Solution
+{
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) 
+    {
+        int len = nums.size();
+        vector<vector<int>> res;
+        if(len == 0)
+            return res;
+        vector<bool> used(len, false);
+        vector<int> tmp;
+        sort(nums.begin(),nums.end());
+        backtrack(nums, tmp, res, used);
+        return res;
+    }
+    void backtrack(vector<int> nums, vector<int>& tmp, vector<vector<int>>& res, vector<bool>& used)
+    {
+        if (tmp.size() == nums.size())
+        {
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(used[i])
+                continue;
+            if (i > 0 && nums[i] == nums[i - 1] && used[i-1] ==false)
+                continue;
+            tmp.push_back(nums[i]);
+            used[i] = true;
+            backtrack(nums, tmp, res, used);
+            tmp.pop_back();
+            used[i] = false;
+        }
+    }
+};
+
+
+
+class Solution
+{
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) 
+    {
+        int len = nums.size();
+        vector<vector<int>> res;
+        if(len == 0)
+            return res;
+        bool used[len];
+        memset(used, false, sizeof(used));
+        vector<int> tmp;
+        sort(nums.begin(),nums.end());
+        backtrack(nums, tmp, res, used);
+        return res;
+    }
+    void backtrack(vector<int> nums, vector<int>& tmp, vector<vector<int>>& res, bool *used)
+    {
+        if (tmp.size() == nums.size())
+        {
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(used[i])
+                continue;
+            if (i > 0 && nums[i] == nums[i - 1] && used[i-1] ==false)
+                continue;
+            tmp.push_back(nums[i]);
+            used[i] = true;
+            backtrack(nums, tmp, res, used);
+            tmp.pop_back();
+            used[i] = false;
+        }
+    }
+};
