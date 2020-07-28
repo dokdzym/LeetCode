@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
+        stack<TreeNode*> call;
+        if(root != nullptr) call.push(root);
+        while(!call.empty()){
+            TreeNode* tmp = call.top();
+            call.pop();
+            if(tmp != nullptr){
+                call.push(tmp);
+                call.push(nullptr);
+                if(tmp -> right) call.push(tmp -> right);
+                if(tmp -> left) call.push(tmp -> left);
+            }else{
+                res.emplace_back(call.top() -> val);
+                call.pop();
+            }
+        }
+        return res;
+    }
+};

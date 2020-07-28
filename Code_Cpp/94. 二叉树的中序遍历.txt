@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> tree;
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> callback;
+        if(root != nullptr) callback.push(root);
+        while(!callback.empty()){
+            TreeNode* tmp = callback.top();
+            callback.pop();
+            if(tmp){
+                if(tmp -> right) callback.push(tmp -> right);
+                callback.push(tmp);
+                callback.push(nullptr);
+                if(tmp -> left) callback.push(tmp -> left);
+            }else{
+                tree.push_back(callback.top() -> val);
+                callback.pop();
+            }
+        }
+        return tree;
+    }
+};
