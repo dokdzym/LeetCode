@@ -1,0 +1,23 @@
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int len=inorder.size();
+        preorder1.assign(preorder.begin(),preorder.end());//拷贝
+        for(int i=0;i<len;i++) {
+            m.insert(make_pair(inorder[i],i));   //中序遍历数组插入哈希map 查找为o(1)
+        }
+        return recursion(0,0,len-1);
+    }
+    TreeNode *recursion(int pre_root,int in_left,int in_right) { //根节点先序下标，左子树中序起始下标，右子树中序结束下标
+        if(in_left>in_right) return NULL;
+        TreeNode *root=new TreeNode(preorder1[pre_root]);
+        int temp=m.find(preorder1[pre_root])->second;  //当前根节点的中序下标
+        root->left=recursion(pre_root+1,in_left,temp-1);
+        root->right=recursion(temp-in_left+1+pre_root,temp+1,in_right);//右子树根节点的前序下标=左子树节点数+pre_root 左子树节点数=temp-in_left+1
+        return root;
+    }
+
+private:
+    unordered_map<int,int> m;
+    vector<int> preorder1;
+};
