@@ -1,30 +1,25 @@
 class CQueue {
-private:
-    stack<int> s_in;
-    stack<int> s_out;
 public:
+    stack<int> s1;
+    stack<int> s2;
     CQueue() {
+
     }
     void appendTail(int value) {
-        s_in.push(value);
+        s1.push(value);
     }
     
     int deleteHead() {
-        if(!s_out.empty()){
-            int tmp = s_out.top();
-            s_out.pop();
-            return tmp;
-        }else{
-            while(!s_in.empty()){
-                s_out.push(s_in.top());
-                s_in.pop();
-            }
-            if(s_out.empty()) 
-                return -1;
-            int tmp = s_out.top();
-            s_out.pop();
-            return tmp;
-        }
+        if(s2.empty())
+            while(!s1.empty()){
+                int tmp = s1.top();
+                s1.pop();
+                s2.push(tmp);
+            }//s1转移到s2
+        if(s2.empty()) return -1;
+        int res = s2.top();
+        s2.pop();
+        return res;
     }
 };
 /**
