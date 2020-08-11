@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int getNum(string str){
+        string tmp = str;
+        istringstream is(tmp);
+        int res;
+        is >> res;
+        return res;
+    }
+    int countDigitOne(int n) {
+        string str = to_string(n);
+        int len = str.size();
+        int res = 0;
+        for(int i = 0; i < len; ++ i){
+            //计算当前位置的1的次数
+            string high = str.substr(0, i);
+            string low = str.substr(i + 1, len - i - 1);
+            int weight = pow(10, len - i - 1);
+            if(str[i] == '0'){
+                res += (high == "" ? 0 : getNum(high)) * weight;
+            }else if(str[i] == '1'){
+                res += (high == "" ? 0 : getNum(high)) * weight + 
+                (low == "" ? 0 : getNum(low)) + 1;
+            }else{//对应位置为2-9
+                res += (high == "" ? 0 : getNum(high)) * weight + weight;
+            }
+        }
+        return res;
+    }
+};

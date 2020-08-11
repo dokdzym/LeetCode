@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool verifyPostorder(vector<int>& postorder) {
+        bool res = true;
+        if(postorder.size() == 0) return res;
+        res = helper(postorder, 0, postorder.size() - 1);
+        return res;
+    }
+    bool helper(vector<int>& postorder, int l, int r){
+        if(l == r) return true;
+        if(l > r) {
+            cout << "l =" << l << endl;
+            cout << "r =" << r << endl;
+            return true;
+        }
+        int root = postorder[r];
+        int index = l;
+        for(;index<r;index++)
+        {
+            if (postorder[index] > root)
+                break;
+        }
+        int pivot = index;
+        for(; index < r; ++ index)
+            if(postorder[index] < root){
+                cout << "l =" << l << endl;
+                cout << "r =" << r << endl;
+                cout << "root =" << root << endl;
+                return false;
+            }
+        bool left(true), right(true);
+        if(pivot > l)
+            left = helper(postorder,l, pivot - 1);
+        if(pivot < r - 1)
+            right = helper(postorder,pivot, r - 1);
+        return left && right;
+    }
+};

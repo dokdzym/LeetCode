@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int len = nums.size();
+        if(len == 0) return 0;
+        int end = 0, sum = 0, res = nums[0];
+        for(int end = 0; end < len; ++ end){
+            sum += nums[end];//包括进新点
+            if(sum < nums[end])
+                sum = nums[end];//从新点开始
+            res = max(sum, res);//计算最大
+        }
+        return res;
+    }
+};

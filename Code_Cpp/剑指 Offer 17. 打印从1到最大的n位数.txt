@@ -1,0 +1,41 @@
+//附带大数解法
+class Solution {
+public:
+int stringToNum(const string& str)  
+{  
+    istringstream iss(str);  
+    int num;  
+    iss >> num;  
+    return num;      
+}  
+    // vector<int> printNumbers(int n) {
+    //     vector<int> res;
+    //     int N = pow(10, n) - 1;
+    //     for(int i = 1; i <= N; ++ i)
+    //         res.emplace_back(i);
+    //     return res;
+    // }
+    vector<int> printNumbers(int n) {
+        string s = "1";
+        vector<int> res;
+        while(s.size() <= n){
+            //cout << s << endl;
+            int tmp = stringToNum(s);
+            res.emplace_back(tmp);
+            s = add(s);
+        }
+        return res;
+    }
+    string& add(string &s){
+        int i = s.size()-1;
+        while(i >= 0 && s[i] == '9'){
+            s[i--] = '0';
+        }
+        if(i < 0){
+            s = "1" + s;
+        }else{
+            s[i] = s[i] + 1;
+        }
+        return s;
+    }
+};
