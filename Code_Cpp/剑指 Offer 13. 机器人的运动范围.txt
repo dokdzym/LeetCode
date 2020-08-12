@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int count = 0;
+    unordered_map<int, bool> hash;
+    int movingCount(int m, int n, int k) {
+        countSteps(m, n, k, 0, 0);
+        return count;
+    }
+    void countSteps(const int& m, const int& n, const int& k, int i, int j){
+        if(hash[i * n + j] || i >= m || i < 0 || j >= n || j < 0 || !isValid(i, j, k)) return ;
+        ++ count;
+        hash[i * n + j] = true;
+        countSteps(m, n, k, i - 1, j);
+        countSteps(m, n, k, i + 1, j);
+        countSteps(m, n, k, i, j - 1);
+        countSteps(m, n, k, i, j + 1);
+    }
+    bool isValid(int i, int j, const int& k){
+        string stri = to_string(i);
+        string strj = to_string(j);
+        int res = 0;
+        for(int i = 0; i < stri.size(); ++ i)
+            res += stri[i] - '0';
+        for(int i = 0; i < strj.size(); ++ i)
+            res += strj[i] - '0';
+        return res <= k;
+    }
+};

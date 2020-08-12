@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int count = 0;
+    int reversePairs(vector<int>& nums) {
+        int len = nums.size();
+        mergeSort(nums, 0, len - 1);
+        return count;
+    }
+    void mergeSort(vector<int>& nums, int l, int r){
+        if(l >= r) return ;
+        int mid = (l + r) >> 1;
+        mergeSort(nums, l, mid);
+        mergeSort(nums, mid + 1, r);
+        mergeOne(nums, l, mid, r);
+    }
+    void mergeOne(vector<int>& nums, int l, int mid, int r){
+        if(l >= r) return ;
+        int* tmp = new int[r - l + 1];
+        int i = l, j = mid + 1, k = 0;
+        while(i <= mid && j <= r){
+            if(nums[i] <= nums[j]){
+                tmp[k++] = nums[i++];
+                count += j - mid - 1;
+            }else{
+                tmp[k++] = nums[j++];
+            }
+        }
+        while(i <= mid){
+            tmp[k++] = nums[i++];
+            count += j - mid - 1;
+        }
+        while(j <= r){
+            tmp[k++] = nums[j++];
+        }
+        for(int i = 0; i < k; ++ i)
+            nums[l + i] = tmp[i];
+    }
+};
