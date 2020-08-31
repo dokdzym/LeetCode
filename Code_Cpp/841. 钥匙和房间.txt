@@ -1,0 +1,18 @@
+class Solution {
+public:
+    unordered_map<int, int> visited;
+    int count = 0;//记录遍历的房间个数
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        int len = rooms.size();
+        dfs(rooms, 0);
+        return len == count;
+    }
+    void dfs(vector<vector<int>>& rooms, int cur){
+        if(visited[cur])
+            return ;
+        ++ count;
+        visited[cur] = 1;//表示已经来过此房间
+        for(auto& room : rooms[cur])
+            dfs(rooms, room);
+    }
+};
