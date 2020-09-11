@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> path;
+        dfs(candidates, target, 0, path);
+        return res;
+    }
+    void dfs(vector<int>& candidates, int target, int index, vector<int>& path){
+        if(target == 0){
+            res.emplace_back(path);
+            return ;
+        }
+        if(target < 0) return;
+        for(int i = index; i < candidates.size(); ++ i){
+            int cur = candidates[i];
+            path.emplace_back(cur);
+            dfs(candidates, target - cur, i, path);
+            path.pop_back();
+        }
+    }
+};

@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<pair<int, int>> freq;
+    vector<int> path;
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        for (int num: candidates) {
+            if (freq.empty() || num != freq.back().first) {
+                freq.emplace_back(num, 1);
+            } else {
+                ++freq.back().second;
+            }
+        }
+
+        dfs(0, target);
+        return res;
+    }
+    void dfs(int pos, int target){
+        if(0 == target){
+            res.emplace_back(path);
+            return ;
+        }
+        if(pos == freq.size() || freq[pos].first > target) return ;
+
+        //当前数值可以取0个
+        dfs(pos + 1, target);
+        //当前数值可以取1个到maxNum个
+        int maxNum = min(target / freq[pos].first, freq[pos].second);
+        for(int i = 1; i <= maxNum; ++ i){
+            int tmp = freq[pos].first;
+            path.emplace_back(tmp);
+            dfs(pos + 1, target - i * tmp);
+        }
+        for(int i = 1; i <= maxNum; ++ i)
+            path.pop_back();
+    }
+};
