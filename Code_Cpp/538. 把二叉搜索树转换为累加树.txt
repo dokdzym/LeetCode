@@ -1,0 +1,22 @@
+/*************************************************************************
+	> File Name: lc.cpp
+	> Author: amoscykl
+	> Mail: amoscykl@163.com 
+	> Created Time: Mon Sep 21 16:08:26 2020
+ ************************************************************************/
+
+class Solution {
+    int value = 0;
+public:
+    TreeNode* convertBST(TreeNode* root) {
+		dfs(root);
+		return root;
+    }
+    void dfs(TreeNode* root){
+	    if(nullptr == root)return;
+	    dfs(root -> right);	
+	    value += root -> val;
+	    root -> val = value;
+	    dfs(root -> left);
+}
+};
